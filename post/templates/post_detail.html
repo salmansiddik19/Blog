@@ -7,8 +7,12 @@
 {% block content %}
 
 <h3>{{ post.title }}</h3>
-<small>by: {{ post.author }} - <a href="{% url 'edit_post_view' post.pk %}">Edit</a>-<a
-        href="{% url 'delete_post' post.pk %}">Delete</a></small>
+<small>by: {{ post.author }} - {{ post.created_at }}
+        {% if user.is_authenticated %}
+        <a href="{% url 'edit_post_view' post.pk %}">Edit</a> -
+        <a href="{% url 'delete_post' post.pk %}">Delete</a>
+        {% endif %}
+</small>
 <p>{{ post.body }}</p>
 <a href="{% url 'post_list_view' %}" class="btn btn-primary">back</a>
 
