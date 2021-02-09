@@ -12,7 +12,7 @@
                 <h5 class="card-title">
                     <a href="{% url 'post_detail_view' post.pk %}" class="text-decoration-none">{{ post.title}}</a>
                     <small class="text-muted">
-                        <a href="{% url 'category' post.category %}" class="text-secondary"
+                        <a href="{% url 'category' post.category|slugify %}" class="text-secondary"
                             style="text-decoration: none;"><small class="text-muted">{{ post.category }}</small> </a>
                     </small>
                 </h5>
@@ -30,5 +30,8 @@
     </li>
     {% endfor %}
 </ul>
+{% for item in category_list %}
+{{ item }} <br>
+{% endfor %}
 
 {% endblock %}

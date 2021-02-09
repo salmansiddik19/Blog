@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Blog categories
+{% endblock %}
+
+{% block content %}
+
+<div class="card-body">
+    <h5 class="card-title text-muted">Categories</h5>
+    {% for item in category_list %}
+    <a class="dropdown-item" href="{% url 'category' item|slugify %}">{{ item }}</a>
+    {% endfor %}
+</div>
+
+{% endblock %}

@@ -10,15 +10,30 @@ class PostListView(generic.ListView):
     template_name = 'post_list.html'
     ordering = ('-created_at')
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['category_menu'] = Category.objects.all()
+        return context
+
 
 def CategoryView(request, cats):
-    category_posts = Post.objects.filter(category=cats)
-    return render(request, 'categories.html', {'category': cats.title(), 'category_posts': category_posts})
+    category_posts = Post.objects.filter(category=cats.replace('-', ' '))
+    return render(request, 'categories.html', {'category': cats.title().replace('-', ' '), 'category_posts': category_posts})
+
+
+def CategoryListView(request):
+    category_list = Category.objects.all()
+    return render(request, 'category_list.html', {'category_list': category_list})
 
 
 class PostDetailView(generic.DetailView):
     model = Post
     template_name = 'post_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['category_list'] = Category.objects.all()
+        return context
 
 
 class AddPostView(generic.CreateView):
