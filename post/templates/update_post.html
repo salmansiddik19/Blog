@@ -7,6 +7,7 @@ Edit the blog post
 {% block content %}
 
 {% if user.is_authenticated %}
+{% if user.id == post.author.id %}
 
 <h1>Edit Post</h1>
 <br>
@@ -17,7 +18,9 @@ Edit the blog post
         <button class="btn btn-primary">Update</button>
     </form>
 </div>
-
+{% else %}
+You are not allowed for this...
+{% endif %}
 {% else %}
 You are not logged in...
 {% endif %}

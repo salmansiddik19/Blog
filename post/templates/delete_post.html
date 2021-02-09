@@ -7,6 +7,7 @@ Delete the blog Post
 {% block content %}
 
 {% if user.is_authenticated %}
+{% if user.id == post.author.id %}
 <h1>Delete Post</h1>
 <br>
 <div class="form-group">
@@ -17,6 +18,9 @@ Delete the blog Post
         <button class="btn btn-primary">Delete</button>
     </form>
 </div>
+{% else %}
+You are not allowed for this...
+{% endif %}
 {% else %}
 You are not logged in...
 {% endif %}
