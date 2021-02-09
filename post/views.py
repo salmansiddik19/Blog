@@ -11,6 +11,11 @@ class PostListView(generic.ListView):
     ordering = ('-created_at')
 
 
+def CategoryView(request, cats):
+    category_posts = Post.objects.filter(category=cats)
+    return render(request, 'categories.html', {'category': cats.title(), 'category_posts': category_posts})
+
+
 class PostDetailView(generic.DetailView):
     model = Post
     template_name = 'post_detail.html'

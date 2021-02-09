@@ -2,19 +2,18 @@
 
 {% block content %}
 
-<h1>Posts</h1>
+{% if category_posts %}
+
+<h1>{{ category }}</h1>
+
 <ul class="list-group">
-    {% for post in post_list %}
+    {% for post in category_posts %}
     <li class="list-group-item">
         <div class="card border-light mb-3">
             <!-- <img src="..." class="card-img-top" alt="..."> -->
             <div class="card-body">
                 <h5 class="card-title">
                     <a href="{% url 'post_detail_view' post.pk %}" class="text-decoration-none">{{ post.title}}</a>
-                    <small class="text-muted">
-                        <a href="{% url 'category' post.category %}" class="text-secondary"
-                            style="text-decoration: none;"><small class="text-muted">{{ post.category }}</small> </a>
-                    </small>
                 </h5>
                 <p class="card-text">{{ post.body|slice:":255" }}</p>
                 <p class="card-text">
@@ -30,5 +29,9 @@
     </li>
     {% endfor %}
 </ul>
+
+{% else %}
+<h5>Opps! no category found...</h5>
+{% endif %}
 
 {% endblock %}
