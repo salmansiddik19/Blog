@@ -16,6 +16,10 @@ Create a blog post
         <button class="btn btn-primary">Post</button>
     </form>
 </div>
+<script>
+    var user_id = "{{ user.id }}";
+    document.getElementById("current_user").value = user_id
+</script>
 {% else %}
 You are not logged in...
 {% endif %}
