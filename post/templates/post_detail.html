@@ -19,6 +19,26 @@
                 {% endif %}
         </p>
         <a href="{% url 'post_list_view' %}" class="btn btn-primary">back</a>
+        <br><br>
+        <hr>
+        <form action="{% url 'like_post' post.pk %}" method="POST">
+                {% csrf_token %}
+                {% if user.is_authenticated %}
+                {% if liked %}
+                <button type="submit" name="post_id" value="{{ post.id }}" class="btn btn-danger btn-sm">
+                        Dislike
+                </button>
+                {% else %}
+                <button type="submit" name="post_id" value="{{ post.id }}" class="btn btn-primary btn-sm">
+                        Like
+                </button>
+                {% endif %}
+                {% else %}
+                <small><a href="{% url 'login' %}" class="text-decoration-none">Login</a> required to like.</small>
+                {% endif %}
+
+                ( {{ likes_count }} )
+        </form>
 </div>
 
 {% endblock %}

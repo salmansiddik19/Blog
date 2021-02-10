@@ -1,8 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views import generic
 from .models import Post, Category
 from .forms import PostForm, UpdateForm
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
+from django.http import HttpResponseRedirect
 
 
 class PostListView(generic.ListView):
@@ -14,6 +15,19 @@ class PostListView(generic.ListView):
         context = super().get_context_data(**kwargs)
         context['category_menu'] = Category.objects.all()
         return context
+
+
+def LikeView(request, pk):
+    post = get_object_or_404(Post, id=request.POST.get('post_id'))
+    liked = False
+    if post.likes.filter(id=request.user.id).exists():
+        post.likes.remove(request.user)
+        liked = False
+    else:
+        post.likes.add(request.user)
+        liked = True
+
+    return HttpResponseRedirect(reverse('post_detail_view', args=[str(pk)]))
 
 
 def CategoryView(request, cats):
@@ -32,7 +46,14 @@ class PostDetailView(generic.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        total = get_object_or_404(Post, id=self.kwargs['pk'])
+        liked = False
+        if total.likes.filter(id=self.request.user.id).exists():
+            liked = True
+
+        context['likes_count'] = total.total_likes()
         context['category_list'] = Category.objects.all()
+        context['liked'] = liked
         return context
 
 
