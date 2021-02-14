@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<h1>Profile page</h1>
+<br>
+<div class="card mb-3">
+    <div class="row g-0">
+        <div class="col-md-2">
+            {% if profile_page.profile_picture %}
+            <img src="{{ profile_page.profile_picture.url }}" class="card-img">
+            {% else %}
+            <img src="{% static 'images/blank-profile-picture-973460_1280.png' %}" class="card-img">
+            {% endif %}
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <h5 class="card-title">
+                    {{ profile_page.user.first_name }}
+                    {{ profile_page.user.last_name }}
+
+                </h5>
+                <p class="card-text">{{ profile_page.bio }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

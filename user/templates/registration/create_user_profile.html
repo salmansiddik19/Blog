@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Create a new profile page
+{% endblock %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+<h1>Create Profile Page</h1>
+<br>
+<div class="form-group">
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="btn btn-primary">Post</button>
+    </form>
+</div>
+<!-- <script>
+    var user_id = "{{ user.id }}";
+    document.getElementById("current_user").value = user_id
+</script> -->
+{% else %}
+You are not logged in...
+{% endif %}
+
+{% endblock %}
