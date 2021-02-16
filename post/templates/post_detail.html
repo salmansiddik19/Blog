@@ -71,6 +71,32 @@
                 </div>
         </div>
 </div>
+<br>
+<hr>
+<h2>Comments...</h2>
+<br>
+{% if not post.comments.all %}
+No comments yet... <br>
+<a href="{% url 'add_comment' post.pk %}" class="text-decoration-none">Add Comment</a>
+<br><br>
+{% else %}
+<a href="{% url 'add_comment' post.pk %}" class="text-decoration-none">Add Comment</a>
+<br><br>
+{% for comment in post.comments.all %}
+<strong>
+        {{ comment.name }}
+</strong>
+<small class="text-muted">
+        {{ comment.comment_date|date:'F d, Y' }}
+</small>
+
+<br>
+{{ comment.body }} <br><br>
+{% endfor %}
+{% endif %}
+<a href="{% url 'add_comment' post.pk %}" class="text-decoration-none">Add Comment</a>
+<br>
+<hr>
 <br><br>
 
 {% endblock %}
