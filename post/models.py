@@ -63,6 +63,8 @@ class Post(models.Model):
 class Comment(models.Model):
     post = models.ForeignKey(
         Post, related_name='comments', on_delete=models.CASCADE)
+    patent = models.ForeignKey(
+        'self', null=True, related_name='replies', on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
     body = models.TextField()
     comment_date = models.DateTimeField(auto_now_add=True)
